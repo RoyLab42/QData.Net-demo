@@ -16,9 +16,11 @@ namespace RoyLab.QData.Demo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Query()
+        public IActionResult Query([FromQuery] string selector, [FromQuery] string filter, [FromQuery] string orderBy)
         {
-            return Ok(dbContext.Set<UserModel>());
+            var result = dbContext.Set<UserModel>()
+                .QueryDynamic(selector, filter, orderBy);
+            return Ok(result);
         }
     }
 }
